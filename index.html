@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iBreathe — Bucharest Air Quality</title>
+  <meta name="description" content="Live air quality across Bucharest, by area — European and US AQI, pollutant levels, and the nearest official monitoring station." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <div class="brand__txt">
+        <h1 class="brand__name">iBreathe</h1>
+        <p class="brand__sub">Bucharest air quality, by area</p>
+      </div>
+    </div>
+    <div class="top__actions">
+      <span class="updated" id="updated" title="Last refreshed"></span>
+      <button class="btn" id="locateBtn" type="button">Use my location</button>
+      <button class="btn btn--icon" id="refreshBtn" type="button" aria-label="Refresh">
+        <span class="btn__spin" id="refreshSpin" aria-hidden="true"></span>
+        Refresh
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__head">
+      <div>
+        <p class="eyebrow">Now · <span id="areaName">Loading…</span></p>
+        <p class="coord" id="coord"></p>
+      </div>
+      <button class="chip" id="stationChip" type="button" hidden></button>
+    </div>
+
+    <div class="readout" id="readout">
+      <div class="lens" id="lensEu">
+        <p class="lens__label">European AQI</p>
+        <p class="lens__num" id="euNum">—</p>
+        <p class="lens__cat" id="euCat">&nbsp;</p>
+      </div>
+      <div class="lens__div" aria-hidden="true"></div>
+      <div class="lens" id="lensUs">
+        <p class="lens__label">US AQI</p>
+        <p class="lens__num" id="usNum">—</p>
+        <p class="lens__cat" id="usCat">&nbsp;</p>
+      </div>
+    </div>
+
+    <p class="health" id="health">Reading the air over Bucharest…</p>
+  </section>
+
+  <main class="grid">
+    <aside class="side">
+      <div class="panel side__pick">
+        <label class="field">
+          <span class="field__label">Choose an area</span>
+          <span class="field__select">
+            <select id="areaSelect" aria-label="Choose an area of Bucharest"></select>
+          </span>
+        </label>
+      </div>
+
+      <div class="panel side__map">
+        <div id="map" class="map" role="application" aria-label="Map of Bucharest air quality by area"></div>
+        <div class="legend" id="legend" aria-hidden="true"></div>
+      </div>
+    </aside>
+
+    <section class="detail">
+      <div class="panel block">
+        <h2 class="eyebrow">Pollutants <span class="eyebrow__note">µg/m³ · modelled</span></h2>
+        <div class="tiles" id="tiles"></div>
+      </div>
+
+      <div class="panel block">
+        <h2 class="eyebrow">Nearest official station</h2>
+        <div id="station" class="station"></div>
+      </div>
+
+      <div class="panel block">
+        <h2 class="eyebrow">European AQI <span class="eyebrow__note">5-day outlook</span></h2>
+        <div class="forecast" id="forecast"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>
+      Live readings modelled by
+      <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+      (CAMS) · official stations via
+      <a href="https://aqicn.org/" target="_blank" rel="noopener">WAQI</a> /
+      <a href="https://www.calitateaer.ro/" target="_blank" rel="noopener">ANPM</a>.
+    </p>
+    <p class="foot__fine">Values are indicative and unvalidated — not for regulatory or health-critical decisions.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
